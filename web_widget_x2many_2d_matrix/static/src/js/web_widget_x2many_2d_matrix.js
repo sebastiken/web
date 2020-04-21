@@ -224,6 +224,9 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
 
         boolean_is_true: function(x, y)
         {
+            if(_.isUndefined(this.boolean_field_value)){
+                return false;
+            }
             return this.get_field_value(
                 this.by_x_axis[x][y], this.boolean_field_value);
         },
@@ -434,8 +437,9 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             {
                 var data = {}, value = this.parse_xy_value(val);
                 data[this.field_value] = value;
-                data[this.boolean_field_value] = false;
-
+                if(!_.isUndefined(this.boolean_field_value)){
+                    data[this.boolean_field_value] = false;
+                }
                 $this.siblings('.read').text(this.format_xy_value(value));
                 $this.val(this.format_xy_value(value));
 
@@ -446,7 +450,9 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             else if(this.validate_xy_value(val_sub) && val_pre == '*'){
                 var data = {}, value = this.parse_xy_value(val_sub);
                 data[this.field_value] = value;
-                data[this.boolean_field_value] = true;
+                if(!_.isUndefined(this.boolean_field_value)){
+                    data[this.boolean_field_value] = true;
+                }
 
                 $this.siblings('.read').text(val);
 
